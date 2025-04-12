@@ -1,0 +1,10 @@
+const LOGS = {
+	REGISTER: 0,
+	LOGIN: 1,
+	DONOR: 2,
+	DONATION: 3,
+	HEALTH_CONDITION: 4,
+	BLOOD_TEST: 5
+};
+
+export default LOGS;

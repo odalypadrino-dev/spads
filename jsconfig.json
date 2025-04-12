@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"jsx": "react",
+		"baseUrl": "./client/",
+		"paths": {
+			"@api/*": [ "src/api/*" ],
+			"@icons/*": [ "src/assets/icons/*" ],
+			"@assets/*": [ "src/assets/*" ],
+			"@components/*": [ "src/components/*" ],
+			"@consts/*": [ "src/constants/*" ],
+			"@hooks/*": [ "src/hooks/*" ],
+			"@lib/*": [ "src/lib/*" ],
+			"@pages/*": [ "src/pages/*" ],
+			"@sections/*": [ "src/sections/*" ],
+			"@/*": [ "src/*" ]
+		}
+	},
+	"exclude": [
+		"node_modules",
+		"**/node_modules/*"
+	]
+}

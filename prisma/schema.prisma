@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+	provider     = "prisma-client"
+	output       = "../src/generated/prisma/client"
+	moduleFormat = "esm"
+}
+
+datasource db {
+	provider = "mysql"
+	url      = env("DATABASE_URL")
+}
+
+enum Role {
+	USER
+	ADMIN
+	ROOT
+}
+
+enum Genre {
+	Hombre
+	Mujer
+}
+
+model User {
+	id Int @id @default(autoincrement())
+	firstName String
+	lastName String
+	ci String @unique @db.VarChar(9)
+	password String
+	role Role @default(USER)
+	logs Log[]
+	registeredDonors Donor[] @relation(name: "Donor_registeredByToUser")
+	updatedDonors Donor[] @relation(name: "Donor_lastUpdatedByToUser")
+	createdHealthConditions HealthCondition[] @relation(name: "HealthCondition_createdByToUser")
+	endedHealthConditions HealthCondition[] @relation(name: "HealthCondition_endedByToUser")
+	createdBloodTests BloodTest[]
+	createdDonations Donation[] @relation(name: "Donation_createdByToUser")
+	completedDonations Donation[] @relation(name: "Donation_completedByToUser")
+	createdAt DateTime @default(now())
+  	updatedAt DateTime @updatedAt
+
+	@@fulltext([ ci ])
+}
+
+model Donor {
+	id Int @id @default(autoincrement())
+	record String
+	names String
+	surnames String
+	ci Ci?
+	ciString String
+	birthdate String
+	genre Genre
+	phone String @db.VarChar(11) @unique
+	dir String
+	weight Int
+	bloodType String? @db.VarChar(3)
+	healthConditions HealthCondition[]
+	bloodTests BloodTest[]
+	donations Donation[]
+	registeredById Int
+	registeredBy User @relation("Donor_registeredByToUser", fields: [ registeredById ], references: [ id ])
+	lastUpdatedById Int
+	lastUpdatedBy User @relation("Donor_lastUpdatedByToUser", fields: [ lastUpdatedById ], references: [ id ])
+	createdAt DateTime @default(now())
+  	updatedAt DateTime @updatedAt
+
+	@@fulltext([ record ])
+	@@fulltext([ ciString ])
+	@@fulltext([ record, ciString ])
+}
+
+model Ci {
+	id Int @id @default(autoincrement())
+	letter String @db.VarChar(1)
+	number String @unique @db.VarChar(9)
+	donorId Int @unique
+	donor Donor @relation(fields: [ donorId ], references: [ id ])
+}
+
+model HealthCondition {
+	id Int @id @default(autoincrement())
+	type Int
+	date String?
+	ended Boolean @default(false)
+	endDate String?
+	endDateTime DateTime?
+	dueTo Int?
+	donorId Int
+	donor Donor @relation(fields: [ donorId ], references: [ id ])
+	createdById Int
+	createdBy User @relation("HealthCondition_createdByToUser", fields: [ createdById ], references: [ id ])
+	endedById Int?
+	endedBy User? @relation("HealthCondition_endedByToUser", fields: [ endedById ], references: [ id ])
+	createdAt DateTime @default(now())
+  	updatedAt DateTime @updatedAt
+}
+
+model BloodTest {
+	id Int @id @default(autoincrement())
+	bloodResults BloodResult[]
+	donorId Int
+	donor Donor @relation(fields: [ donorId ], references: [ id ])
+	createdById Int
+	createdBy User @relation(fields: [ createdById ], references: [ id ])
+	createdAt DateTime @default(now())
+  	updatedAt DateTime @updatedAt
+}
+
+model BloodResult {
+	id Int @id @default(autoincrement())
+	type Int
+	bloodTestId Int
+	bloodTest BloodTest @relation(fields: [ bloodTestId ], references: [ id ])
+}
+
+model Donation {
+	id Int @id @default(autoincrement())
+	donorId Int
+	donor Donor @relation(fields: [ donorId ], references: [ id ])
+	patientFirstName String
+	patientLastName String
+	patientCiLetter String @db.VarChar(1)
+	patientCi String
+	completed Boolean @default(false)
+	completedDate DateTime?
+	createdById Int
+	createdBy User @relation("Donation_createdByToUser", fields: [ createdById ], references: [ id ])
+	completedById Int?
+	completedBy User? @relation("Donation_completedByToUser", fields: [ completedById ], references: [ id ])
+	createdAt DateTime @default(now())
+  	updatedAt DateTime @updatedAt
+}
+
+model Log {
+	id Int @id @default(autoincrement())
+	description String
+	type Int
+	byId Int
+	by User @relation(fields: [ byId ], references: [ id ])
+	createdAt DateTime @default(now())
+  	updatedAt DateTime @updatedAt
+}
