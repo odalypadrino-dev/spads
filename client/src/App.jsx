@@ -18,8 +18,6 @@ import Header from '@components/Header';
 import Modal from '@components/Modal';
 import Protected from '@components/Protected';
 
-import USER from '@consts/user';
-
 const ScrollToTop = ({ children }) => {
 	const location = useLocation();
 	
