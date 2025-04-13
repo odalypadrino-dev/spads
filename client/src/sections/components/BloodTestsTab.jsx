@@ -100,14 +100,16 @@ const BloodTestsTab = ({ bloodTests, setModal, isAdmin }) => {
 	};
 
 	useEffect(() => {
-		const fetch = new AbortController();
-		if (params) fetchBTs(fetch);
-
-		if (hdl.every(({ id }) => id !== 'fetchBTs')) newHandler({
+		newHandler({
 			key: 'bt',
 			id: 'fetchBTs',
 			action: fetchBTs
 		});
+	}, []);
+
+	useEffect(() => {
+		const fetch = new AbortController();
+		if (params) fetchBTs(fetch);
 
 		return () => fetch.abort();
 	}, [ page ]);

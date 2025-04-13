@@ -351,14 +351,16 @@ const HealthConditionTab = ({ healthConditions, setModal, isAdmin }) => {
 	};
 
 	useEffect(() => {
-		const fetch = new AbortController();
-		if (params) fetchHCs(fetch);
-
-		if (hdl.every(({ id }) => id !== 'fetchHCs')) newHandler({
+		newHandler({
 			key: 'hc',
 			id: 'fetchHCs',
 			action: fetchHCs
 		});
+	}, []);
+
+	useEffect(() => {
+		const fetch = new AbortController();
+		if (params) fetchHCs(fetch);
 
 		return () => fetch.abort();
 	}, [ page ]);

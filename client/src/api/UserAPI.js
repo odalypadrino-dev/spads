@@ -5,7 +5,7 @@ import USER from '@consts/user';
 
 const reducer = (current, update) => ({...current, ...update});
 
-const UserAPI = (setLoading, isLogged, setLogged) => {
+const UserAPI = (setLoading, isLogged) => {
 	const [ userState, setUserState ] = useReducer(reducer, {
 		user: null,
 		isLogged: false,
@@ -24,8 +24,6 @@ const UserAPI = (setLoading, isLogged, setLogged) => {
 					isAdmin: content.role === USER.ROLES.ADMIN.value,
 					isRoot: content.role === USER.ROLES.ROOT.value,
 				});
-
-				setLogged(true);
 
 				setLoading(false);
 			};

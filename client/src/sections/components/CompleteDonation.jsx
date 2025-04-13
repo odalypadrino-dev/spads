@@ -15,8 +15,6 @@ const CompleteDonation = ({ data, action, setDonation }) => {
 	const [ hdls ] = handlers;
 	const donationHandlers = hdls.filter(({ key }) => key === 'donation' || key === 'donationStatus');
 
-	console.log(donationHandlers);
-
 	const cancelHandler = () => {
 		if (loading) return;
 		closeModal();

@@ -172,7 +172,7 @@ const DonationStatus = ({ donations, isAdmin }) => {
 	useEffect(() => {
 		if (!canDonate && params) fetchDonAvail();
 		
-		if (hdl.every(({ id }) => id !== 'fetchDonAvail')) newHandler({
+		newHandler({
 			key: 'donationStatus',
 			id: 'fetchDonAvail',
 			action: fetchDonAvail

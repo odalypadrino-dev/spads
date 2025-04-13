@@ -39,7 +39,6 @@ const SignUp = () => {
 			const { status, success, content } = data;
 
 			if (status === 500) {
-				console.log(content);
 				setLoading(false);
 				toast.error("Error en el servidor.");
 			};

@@ -50,17 +50,35 @@ const getInterval = (start, end) => {
 				singular: 'segundo',
 				plural: 'segundos'
 			}
+		},
+		{
+			unit: 'milliseconds',
+			label: {
+				singular: 'milisegundo',
+				plural: 'milisegundos'
+			}
 		}
 	];
 
-	for (let i = 0; i < UNITS.length; i++) {
-		const unit = UNITS[ i ];
-		const duration = interval.toDuration([ unit.unit, 'milliseconds' ]).toObject();
+	const toHuman = [];
 
-		const elapsedTime = duration[ unit.unit ];
+	const duration = Object.entries(interval.toDuration(UNITS.map(({ unit }) => unit)).normalize().toObject())
+		.filter(([ key ]) => key !== 'milliseconds');
 
-		if (elapsedTime >= 1) return [ elapsedTime, unit.label.singular, unit.label.plural ];
+	for (let i = 0; i < duration.length; i++) {
+		const [ unit, time ] = duration[i];
+		const unitsHumanized = UNITS.find(({ unit: unt }) => unt === unit);
+
+		if (time >= 1) toHuman.push(`${ time } ${ time > 1 ? unitsHumanized.label.plural : unitsHumanized.label.singular }`);
+
+		if (toHuman.length === 2) break;
 	};
+
+	return toHuman.reduce((string, time, ind, arr) => {
+		if (ind === 0) return time;
+		if (ind === arr.length - 1) return `${ string } y ${ time }`;
+		return `${ string }, ${ time }`;
+	}, '');
 };
 
 const DonationWaiting = ({ preview = false, list = false, data }) => {
@@ -75,11 +93,10 @@ const DonationWaiting = ({ preview = false, list = false, data }) => {
 	};
 
 	const currentTime = DateTime.now();
-
 	
-	const [ elapsedTime, singular, plural ] = getInterval(DateTime.fromISO(completedDate), currentTime);
+	const elapsedTime = getInterval(DateTime.fromISO(completedDate), currentTime);
 
-	const [ timeLeft, singularLeft, pluralLeft ] = getInterval(currentTime, currentTime.plus({ [ DONOR.DONATIONS.time.unit ]: DONOR.DONATIONS.time.value }));
+	const timeLeft = getInterval(currentTime, DateTime.fromISO(completedDate).plus({ [ DONOR.DONATIONS.time.unit ]: DONOR.DONATIONS.time.value }));
 
 	return (
 		<article
@@ -138,11 +155,11 @@ const DonationWaiting = ({ preview = false, list = false, data }) => {
 						<ul className="flex flex-col gap-3">
 							
 							<li className='list-disc list-inside'>
-								<span>Tiempo transcurrido desde la ultima donación: <strong className="font-medium text-amber-700 select-text">{ elapsedTime } { elapsedTime > 1 ? plural : singular }</strong></span>
+								<span>Tiempo transcurrido desde la ultima donación: <strong className="font-medium text-amber-700 select-text">{ elapsedTime }</strong></span>
 							</li>
 							
 							<li className='list-disc list-inside'>
-								<span>Tiempo restante para poder realizar otra donación: <strong className="font-medium text-amber-700 select-text">{ timeLeft } { timeLeft > 1 ? pluralLeft : singularLeft }</strong></span>
+								<span>Tiempo restante para poder realizar otra donación: <strong className="font-medium text-amber-700 select-text">{ timeLeft }</strong></span>
 							</li>
 
 						</ul>

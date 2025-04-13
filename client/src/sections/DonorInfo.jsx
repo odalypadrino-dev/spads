@@ -60,7 +60,7 @@ const DonorInfo = ({ donors, newModal, handlers, isAdmin }) => {
 	useEffect(() => {
 		if (!donor && params) fetchDonor();
 		
-		if (hdl.every(({ id }) => id !== 'fetchDonor')) newHandler({
+		newHandler({
 			key: 'donorInfo',
 			id: 'fetchDonor',
 			action: fetchDonor

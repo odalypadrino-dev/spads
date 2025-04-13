@@ -21,22 +21,24 @@ export const DataProvider = ({ children }) => {
 	};
 
 	const newHandler = handler => {
-		if (handlers.some(({ id }) => id === handler.id)) return;
-		setHandlers(handlers => [ ...handlers, handler ]);
+		setHandlers(handlers => [
+			...handlers.filter(({ id }) => id !== handler.id),
+			handler
+		]);
 	};
 
 	useEffect(() => {
 		const tryLogin = () => {
 			const accessToken = localStorage.getItem('accessToken');
-			if (accessToken && !logged) return setLogged(true);
+			if (accessToken) return setLogged(true);
 			setLoading(false);
 		};
 
-		tryLogin();
+		if (!logged) tryLogin();
 	}, [ logged ]);
 
 	const state = {
-		userAPI: UserAPI(setLoading, logged, setLogged),
+		userAPI: UserAPI(setLoading, logged),
 		donorAPI: DonorAPI(),
 		adminAPI: AdminAPI(),
 		rootAPI: RootAPI(),

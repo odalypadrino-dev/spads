@@ -96,14 +96,16 @@ const DonationsTab = ({ donations: dnts, setModal, isAdmin }) => {
 	};
 
 	useEffect(() => {
-		const fetch = new AbortController();
-		if (params) fetchDonations(fetch);
-
-		if (hdl.every(({ id }) => id !== 'fetchDonations')) newHandler({
+		newHandler({
 			key: 'donation',
 			id: 'fetchDonations',
 			action: fetchDonations
 		});
+	}, []);
+
+	useEffect(() => {
+		const fetch = new AbortController();
+		if (params) fetchDonations(fetch);
 
 		return () => fetch.abort();
 	}, [ page ]);
