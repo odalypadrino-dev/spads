@@ -61,13 +61,13 @@ const CardsHeader = ({ stats, loading }) => {
 	const weightAvg = {
 		title: 'Peso promedio',
 		icon: <WeightHanging className='text-blue-500' />,
-		value: `${ stats?.avgWeight || 0 } Kg`
+		value: `${ parseInt(stats?.avgWeight) || 0 } Kg`
 	};
 
 	const ageAvg = {
 		title: 'Edad promedio',
 		icon: <Person className='text-violet-500' />,
-		value: `${ stats?.avgAge || 0 } años`
+		value: `${ parseInt(stats?.avgAge) || 0 } años`
 	};
 
 	return (
