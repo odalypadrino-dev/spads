@@ -68,7 +68,7 @@ const Status = ({ className, completed }) => {
 
 const DonationsTab = ({ donations: dnts, setModal, isAdmin }) => {
 	const params = useParams();
-	const { getDonations } = dnts;
+	const { getDonations, completeDonation } = dnts;
 	const state = useContext(GlobalState);
 	const { handlers } = state;
 	const [ hdl, newHandler ] = handlers;
@@ -112,7 +112,7 @@ const DonationsTab = ({ donations: dnts, setModal, isAdmin }) => {
 	
 	const infoHandler = data => {
 		setModal({
-			children: <DonationInfo data={ data } isAdmin={ isAdmin } />
+			children: <DonationInfo data={ data } action={ completeDonation } isAdmin={ isAdmin } />
 		});
 	};
 
