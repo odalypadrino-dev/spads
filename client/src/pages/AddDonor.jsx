@@ -7,6 +7,7 @@ import { GlobalState } from '@/GlobalState';
 import AddDonorForm from '@sections/AddDonorForm';
 
 import DONOR from '@consts/donor';
+import DonationBackground from '@components/DonationBackground';
 
 const INITIAL_DATA = {
 	names: '',
@@ -89,6 +90,9 @@ const AddDonor = () => {
 
 	return (
 		<main className='flex items-center justify-center mt-6'>
+
+			<DonationBackground />
+
 			<AddDonorForm 
 				{...{
 					donorData,
@@ -98,6 +102,7 @@ const AddDonor = () => {
 					formValid
 				}} 
 			/>
+
 		</main>
 	);
 };

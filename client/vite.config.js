@@ -25,6 +25,7 @@ export default defineConfig({
 			'@hooks': resolve(__dirname, './src/hooks'),
 			'@lib': resolve(__dirname, './src/lib'),
 			'@icons': resolve(__dirname, './src/assets/icons'),
+			'@logos': resolve(__dirname, './src/assets/logos'),
 			'@pages': resolve(__dirname, './src/pages'),
 			'@sections': resolve(__dirname, './src/sections')
 		}

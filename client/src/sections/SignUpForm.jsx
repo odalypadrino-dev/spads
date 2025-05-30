@@ -32,7 +32,7 @@ const SignUpForm = ({ firstName, lastName, ci, password, confirmPassword, loadin
 	};
 
 	return (
-		<section className='flex items-center justify-center mt-20'>
+		<section className='flex items-center justify-center p-10 rounded-xl bg-mercury-50'>
 			<Form onSubmit={ onSubmit }>
 
 				<Fieldset

@@ -15,7 +15,7 @@
 		"start": "concurrently \"pnpm start-api\" \"pnpm dev-client\""
 	},
 	"keywords": [],
-	"author": "Odalys Padrino",
+	"author": "Odaly Padrino",
 	"license": "ISC",
 	"dependencies": {
 		"@prisma/client": "6.6.0",

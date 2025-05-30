@@ -7,6 +7,7 @@ import axios from '@lib/axios';
 import { GlobalState } from "@/GlobalState";
 
 import SignInForm from "@sections/SignInForm";
+import DonationBackground from "@components/DonationBackground";
 
 const INITIAL_DATA = {
 	ci: '',
@@ -64,13 +65,17 @@ const SignIn = () => {
 	};
 
 	return (
-		<main className="flex items-center justify-center">
+		<main className="flex items-center justify-center h-full">
+
+			<DonationBackground />
+
 			<SignInForm
 				{ ...authData }
 				loading={ loading }
 				onChange={ onChange }
 				onSubmit={ onSubmit }
 			/>
+
 		</main>
 	);
 };

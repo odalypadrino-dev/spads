@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import axios from '@lib/axios';
 
 import SignUpForm from "@sections/SignUpForm";
+import DonationBackground from "@components/DonationBackground";
 
 const INITIAL_DATA = {
 	firstName: '',
@@ -63,13 +64,17 @@ const SignUp = () => {
 	};
 
 	return (
-		<main className="flex items-center justify-center">
+		<main className="flex items-center justify-center h-full">
+
+			<DonationBackground />
+
 			<SignUpForm
 				{ ...authData }
 				loading={ loading }
 				onChange={ onChange }
 				onSubmit={ onSubmit }
 			/>
+
 		</main>
 	);
 };

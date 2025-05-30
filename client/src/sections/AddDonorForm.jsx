@@ -30,8 +30,8 @@ const AddDonorForm = ({ donorData, onChange, onSubmit, loading, formValid }) => 
 	const setValue = (name, value) => onChange({ target: { name, value } });
 
 	return (
-		<section className='flex items-center justify-center'>
-			<Form onSubmit={ onSubmit } data-invalid={ !formValid }>
+		<section className='flex items-center justify-center p-10 rounded-xl bg-mercury-50'>
+			<Form onSubmit={ onSubmit } data-invalid={ !formValid } className='gap-8'>
 
 				<Fieldset
 					title='Añade un nuevo donante'
@@ -284,7 +284,7 @@ const AddDonorForm = ({ donorData, onChange, onSubmit, loading, formValid }) => 
 
 				</Fieldset>
 
-				<Form.Footer>
+				<Form.Footer className='pb-0'>
 					<Form.Footer.Buttons>
 						<button type="submit" className={ loading ? 'loading' : null }>
 							<span>

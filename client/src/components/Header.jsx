@@ -10,6 +10,8 @@ import Loading from "@components/Loading";
 import USER from "@consts/user";
 
 import Logout from "@icons/Logout";
+import MPPSLogo from "@logos/MPPSLogo";
+import MPPSSeal from "@logos/MPPSSeal";
 
 const Header = () => {
 	const navigate = useNavigate();
@@ -37,7 +39,12 @@ const Header = () => {
 		}
 	};
 
-	if (!logged) return null;
+	if (!logged) return (
+		<header className="flex items-center justify-between absolute top-0 p-4 px-8 w-full h-20 [&>svg]:w-auto [&>svg]:h-full">
+			<MPPSSeal />
+			<MPPSLogo />
+		</header>
+	);
 
 	if (!userData.isLogged) return (
 		<header className='flex items-center px-8 min-h-16 border-b border-mercury-100'>

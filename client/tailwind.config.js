@@ -10,6 +10,9 @@ export default {
 	],
 	theme: {
 		extend: {
+			backgroundImage: {
+				'donation': 'url("/src/assets/images/image_1.webp")'
+			},
 			fontFamily: {
 				'mono': [ '"JetBrains Mono Variable"', ...defaultTheme.fontFamily.mono ]
 			},
