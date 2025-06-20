@@ -10,6 +10,7 @@ import type {
 	DonorController,
 	DonorBody
 } from 'types/donor';
+import getAge from "@lib/getAge";
 
 const donorCtrl: DonorController = {
 	register: async (req, res) => {
@@ -101,6 +102,22 @@ const donorCtrl: DonorController = {
 				status: 400,
 				success: false,
 				content: 'La fecha de nacimiento del donante es requerida.'
+			});
+
+			const age = getAge(birthdate);
+
+			const [ MIN_AGE, MAX_AGE ] = DONOR.AGE.RANGE;
+
+			if (age < MIN_AGE) return res.json({
+				status: 400,
+				success: false,
+				content: `El donante debe tener ${ MIN_AGE } años de edad o más.`
+			});
+
+			if (age > MAX_AGE) return res.json({
+				status: 400,
+				success: false,
+				content: `El donante tiene más de ${ MAX_AGE } años de edad.`
 			});
 
 			if (!genre) return res.json({
