@@ -40,34 +40,40 @@ const Status = ({ className, completed }) => {
 };
 
 const CardsHeader = ({ stats, loading }) => {
+	const totalDonors = stats?.donor.total;
+	const totalDonations = stats?.donations.total;
+	const totalEligible = stats?.donors.eligibility.eligible / stats?.donors.total * 100;
+	const avgWeight = parseInt(stats?.avgWeight);
+	const avgAge = parseInt(stats?.avgAge);
+
 	const donorsData = {
 		title: 'Nuevos donantes',
 		icon: <User className='text-green-500' />,
-		value: stats?.donors.total || 0
+		value: totalDonors || 0
 	};
 
 	const donationsData = {
 		title: 'Total de donaciones',
 		icon: <Droplet className='text-red-500' />,
-		value: stats?.donations.total || 0
+		value: totalDonations || 0
 	};
 
 	const eligibilityData = {
 		title: 'Tasa de elegibilidad',
 		icon: <Award className='text-amber-500' />,
-		value: `${ stats?.donors.eligibility.eligible / stats?.donors.total * 100 || 0 }%`
+		value: `${ Number.isInteger(totalEligible) ? totalEligible : totalEligible.toFixed(2) || 0 }%`
 	};
 
 	const weightAvg = {
 		title: 'Peso promedio',
 		icon: <WeightHanging className='text-blue-500' />,
-		value: `${ parseInt(stats?.avgWeight) || 0 } Kg`
+		value: `${ avgWeight || 0 } Kg`
 	};
 
 	const ageAvg = {
 		title: 'Edad promedio',
 		icon: <Person className='text-violet-500' />,
-		value: `${ parseInt(stats?.avgAge) || 0 } años`
+		value: avgAge === 1 ? `${ avgAge } año` : `${ avgAge } años`
 	};
 
 	return (
