@@ -40,9 +40,9 @@ const Status = ({ className, completed }) => {
 };
 
 const CardsHeader = ({ stats, loading }) => {
-	const totalDonors = stats?.donor.total;
+	const totalDonors = stats?.donors.total;
 	const totalDonations = stats?.donations.total;
-	const totalEligible = stats?.donors.eligibility.eligible / stats?.donors.total * 100;
+	const totalEligible = stats?.donors.eligibility.eligible / stats?.donors.total * 100 || 0;
 	const avgWeight = parseInt(stats?.avgWeight);
 	const avgAge = parseInt(stats?.avgAge);
 
@@ -61,7 +61,7 @@ const CardsHeader = ({ stats, loading }) => {
 	const eligibilityData = {
 		title: 'Tasa de elegibilidad',
 		icon: <Award className='text-amber-500' />,
-		value: `${ Number.isInteger(totalEligible) ? totalEligible : totalEligible.toFixed(2) || 0 }%`
+		value: `${ Number.isInteger(totalEligible) ? totalEligible : totalEligible.toFixed(2) }%`
 	};
 
 	const weightAvg = {
